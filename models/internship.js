@@ -24,6 +24,7 @@ const internshipSchema = new mongoose.Schema({
     link: {
         type: String,
         required: true,
+        unique: true,
     }
 });
 
