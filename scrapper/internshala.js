@@ -3,9 +3,6 @@ const cheerio = require("cheerio");
 const Internship = require("../models/Internship");
 const BASE_URL = "https://internshala.com";
 
-require("dotenv").config();
-
-const connectDB = require("../config/db");
 
 function firstMatch($, el, selectors) {
     for (const sel of selectors) {
@@ -98,26 +95,18 @@ async function saveInternships(internships) {
     console.log("Internships saved to MongoDB.");
 }
 
-(async () => {
+async function runInternshalaScraper() {
     try {
-        // Connect to MongoDB first
-        await connectDB();
-
-        // Scrape internships
         const results = await scrapeInternshala();
 
         console.log(`Found ${results.length} internships`);
 
-        // Save them
         await saveInternships(results);
 
-        console.log("✅ Scraping completed successfully.");
-
-        process.exit(0);
+        console.log("✅ Internshala scraping completed.");
     } catch (err) {
-        console.error(err);
-        process.exit(1);
+        console.error("Internshala scraper failed:", err);
     }
-})();
+}
 
-module.exports = { scrapeInternshala };
+module.exports = runInternshalaScraper;

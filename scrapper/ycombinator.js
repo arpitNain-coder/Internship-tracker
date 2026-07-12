@@ -1,15 +1,12 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
-const connectDB = require("../config/db");
 const Internship = require("../models/Internship");
-require("dotenv").config();
+
 
 
 
 async function scrapeYC() {
-
-    await connectDB();
 
     try {
         const response = await axios.get("https://www.ycombinator.com/jobs", {
@@ -64,6 +61,4 @@ async function scrapeYC() {
     
 }
 
-
-
-scrapeYC();
+module.exports = scrapeYC;

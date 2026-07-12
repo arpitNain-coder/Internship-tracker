@@ -1,8 +1,5 @@
 const axios = require("axios");
 const fs = require("fs");
-require("dotenv").config();
-
-const connectDB = require("../config/db");
 const Internship = require("../models/Internship");
 
 
@@ -118,23 +115,18 @@ async function scrapeAllInternships() {
     return all;
 }
 
-(async () => {
+async function runUnstopScraper() {
     try {
-        await connectDB();
-
         const results = await scrapeAllInternships();
 
         console.log(`Found ${results.length} internships`);
 
         await saveInternships(results);
 
-        console.log("✅ Unstop internships stored successfully.");
-
-        process.exit(0);
+        console.log("✅ Unstop scraping completed.");
     } catch (err) {
-        console.error(err);
-        process.exit(1);
+        console.error("Unstop scraper failed:", err);
     }
-})();
+}
 
-module.exports = { scrapeAllInternships };
+module.exports = runUnstopScraper;

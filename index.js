@@ -3,6 +3,7 @@ const connectDB = require("./config/db");
 const internshipRoutes = require("./routes/internshipRoutes");
 require("dotenv").config();
 connectDB();
+require("./scheduler/cron");
 
 const app = express();
 app.use(express.json());
